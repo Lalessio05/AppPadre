@@ -3,9 +3,8 @@ import * as React from "react";
 import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from "./components/HomeScreen";
-import AboutScreen from "./components/AboutScreen";
-
+import TelecamereScreen from "./components/TelecamereScreen";
+import ValvoleScreen from "./components/ValvoleScreen"
 
 
 export default function App() {
@@ -13,8 +12,8 @@ export default function App() {
     return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Telecamere" component={HomeScreen} />
-        <Tab.Screen name="Valvole" component={AboutScreen} />
+        <Tab.Screen name="Telecamere" component={TelecamereScreen} />
+        <Tab.Screen name="Valvole" component={ValvoleScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
