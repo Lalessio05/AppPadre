@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -13,51 +13,6 @@ import {
 
 const windowWidth = Dimensions.get("window").width;
 const IMAGE_HEIGHT = 100;
-
-const [valvole,setValvole] = useState ([
-  {
-    source: require("../images/Cucina.jpg"),
-    key: "0",
-    text: "Cucina",
-    batterie: [],
-  },
-  {
-    source: require("../images/Cucina.jpg"),
-    key: "1",
-    text: "Cameretta",
-    batterie: [],
-  },
-  {
-    source: require("../images/Cucina.jpg"),
-    key: "2",
-    text: "Bagno giù",
-    batterie: [],
-  },
-  {
-    source: require("../images/Cucina.jpg"),
-    key: "3",
-    text: "Camera da letto",
-    batterie: [],
-  },
-  {
-    source: require("../images/Cucina.jpg"),
-    key: "4",
-    text: "Entrata",
-    batterie: [],
-  },
-  {
-    source: require("../images/Cucina.jpg"),
-    key: "5",
-    text: "Bagno Mansarda",
-    batterie: [],
-  },
-  {
-    source: require("../images/Cucina.jpg"),
-    key: "6",
-    text: "Mansarda Camera",
-    batterie: [],
-  },
-]);
 
 const ImageWithText = ({ image, text, onPress, style, riga }) => (
   <View style={style}>
@@ -75,17 +30,71 @@ const ImageWithText = ({ image, text, onPress, style, riga }) => (
 
 export default function ValvoleScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [valvole, setValvole] = useState([
+    {
+      source: require("../images/Cucina.jpg"),
+      key: "0",
+      text: "Cucina",
+      batterie: [],
+    },
+    {
+      source: require("../images/Cucina.jpg"),
+      key: "1",
+      text: "Cameretta",
+      batterie: [],
+    },
+    {
+      source: require("../images/Cucina.jpg"),
+      key: "2",
+      text: "Bagno giù",
+      batterie: [],
+    },
+    {
+      source: require("../images/Cucina.jpg"),
+      key: "3",
+      text: "Camera da letto",
+      batterie: [],
+    },
+    {
+      source: require("../images/Cucina.jpg"),
+      key: "4",
+      text: "Entrata",
+      batterie: [],
+    },
+    {
+      source: require("../images/Cucina.jpg"),
+      key: "5",
+      text: "Bagno Mansarda",
+      batterie: [],
+    },
+    {
+      source: require("../images/Cucina.jpg"),
+      key: "6",
+      text: "Mansarda Camera",
+      batterie: [],
+    },
+  ]);
+
+
   return (
     <View>
-      <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose= {()=> {setValvole([...valvole, {source : "../images/Cucina.jpg", key: valvole.length+1, text: "tbd", batterie: []}])}}
-      >
-        <TextInput/>
-        <TouchableOpacity onPress={()=>setModalVisible(!modalVisible)}>
-          <Text style={{fontSize:30}}>Ciao</Text>
+      <Modal animationType="slide" transparent={true} visible={modalVisible}>
+        <TextInput />
+        <TouchableOpacity
+          onPress={() => {
+            setModalVisible(!modalVisible);
+            console.log("Aggiunto");
+            setValvole(
+                valvole.concat({
+                  source: require("../images/Cucina.jpg"),
+                  key: valvole.length + 1,
+                  text: "tbd",
+                  batterie: [],
+                })
+              );
+          }}
+        >
+          <Text style={{ fontSize: 30 }}>Ciao</Text>
         </TouchableOpacity>
       </Modal>
 
@@ -101,7 +110,6 @@ export default function ValvoleScreen({ navigation }) {
       </View>
       <ScrollView>
         {valvole.map((valvola) => (
-          //foreach (var valvola in valvole)
           <ImageWithText
             key={valvola.key}
             style={{
@@ -112,16 +120,7 @@ export default function ValvoleScreen({ navigation }) {
             text={valvola.text}
             onPress={() => {
               valvola.batterie.push(new Date());
-              console.log("Batterie cambiate.");
-              if (valvola.batterie.length >= 2) {
-                console.log(
-                  "Sono passati " +
-                    (valvola.batterie[valvola.batterie.length - 1] -
-                      valvola.batterie[valvola.batterie.length - 2]) /
-                      (1000 * 60 * 60) +
-                    " giorni."
-                );
-              }
+              console.log(valvole);
             }}
           />
         ))}
@@ -129,47 +128,3 @@ export default function ValvoleScreen({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
-  },
-});
