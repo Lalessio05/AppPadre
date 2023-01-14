@@ -74,28 +74,63 @@ export default function ValvoleScreen({ navigation }) {
       batterie: [],
     },
   ]);
-
-
+  const [nomeNuovaValvola, onChangeText] = React.useState("");
   return (
     <View>
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
-        <TextInput />
-        <TouchableOpacity
-          onPress={() => {
-            setModalVisible(!modalVisible);
-            console.log("Aggiunto");
-            setValvole(
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        style={{ flex: 1 }}
+      >
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            flex: 1,
+            backgroundColor: "white",
+          }}
+        >
+          <TextInput
+            style={{
+              fontSize: 20,
+              color: "black",
+              width: 200,
+              height: 50,
+              borderWidth: 2,
+              borderColor: "black",
+              textAlign: "center",
+            }}
+            placeholder="Nome"
+            onChangeText={(text) => onChangeText(text)}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              setModalVisible(!modalVisible);
+              console.log("Aggiunto");
+              setValvole(
                 valvole.concat({
                   source: require("../images/Cucina.jpg"),
                   key: valvole.length + 1,
-                  text: "tbd",
+                  text: nomeNuovaValvola,
                   batterie: [],
                 })
               );
-          }}
-        >
-          <Text style={{ fontSize: 30 }}>Ciao</Text>
-        </TouchableOpacity>
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 20,
+                borderWidth: 2,
+                backgroundColor: "black",
+                color: "white",
+                borderColor: "white",
+              }}
+            >
+              Aggiungi valvola
+            </Text>
+          </TouchableOpacity>
+        </View>
       </Modal>
 
       <View>
